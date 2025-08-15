@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dan Mackie - Interactive Resume</title>
+    <!-- Chosen Palette: Calm & Confident -->
+    <!-- Application Structure Plan: The SPA is designed as a top-down narrative journey through Dan Mackie's career. It starts with high-impact KPIs to immediately establish value, followed by an interactive timeline for chronological context. A skills section uses charts for a digestible breakdown of expertise. Finally, a deep-dive section on AI innovations showcases a key, unique achievement. This thematic structure, supported by sticky navigation, allows users to either follow the narrative or jump to sections of interest, prioritizing user exploration and clear storytelling over a rigid, report-like format. -->
+    <!-- Visualization & Content Choices: 
+        - KPIs -> Goal: Inform -> Dynamic Stat Cards -> Hover animation -> Justification: Quick, high-impact data delivery -> HTML/CSS.
+        - Career History -> Goal: Change/Organize -> Vertical Timeline -> Scroll-based exploration -> Justification: Visually engaging chronological narrative -> HTML/CSS.
+        - Skill Domains -> Goal: Compare -> Radar Chart -> Interactive tooltips -> Justification: Shows balanced strengths across multiple categories -> Chart.js/Canvas.
+        - Expertise Breakdown -> Goal: Compare -> Doughnut Chart -> Interactive tooltips -> Justification: Clearly shows the composition of his core skills -> Chart.js/Canvas.
+        - AI Process -> Goal: Organize -> HTML Flowchart -> Static visual guide -> Justification: Simplifies a complex, unique process without external libraries -> HTML/CSS.
+        - Localization Growth -> Goal: Change -> Bar Chart -> Interactive tooltips -> Justification: Quantifies the massive impact of the AI initiative -> Chart.js/Canvas.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .kpi-value {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #2c5282;
+        }
+        .kpi-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #4a5568;
+            margin-top: 0.5rem;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #2c5282;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <nav id="navbar" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">Dan Mackie</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#kpis" class="text-gray-600 font-medium nav-link">Impact</a>
+                <a href="#experience" class="text-gray-600 font-medium nav-link">Experience</a>
+                <a href="#skills" class="text-gray-600 font-medium nav-link">Skills</a>
+                <a href="#innovations" class="text-gray-600 font-medium nav-link">Innovations</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <header class="text-center py-16">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-[#2c5282] mb-4">Lead Product Manager</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Founder-trusted leader specializing in scaling high-growth fintech and Web3 products through design-led innovation and founder-trusted execution.
+            </p>
+        </header>
+
+        <section id="kpis" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">Career Impact by the Numbers</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="kpi-card">
+                    <div class="kpi-value">6M+</div>
+                    <div class="kpi-label">Customers Scaled at Curve</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">£15M</div>
+                    <div class="kpi-label">Annual Savings at Barclays</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">60k+</div>
+                    <div class="kpi-label">4+ Star App Store Reviews</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">40+</div>
+                    <div class="kpi-label">Engineers & Designers Led</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Professional Journey</h3>
+            <div class="relative wrap overflow-hidden p-10 h-full">
+                <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">4</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Curve <span class="text-sm text-gray-500">(2022-Present)</span></h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Launched Europe's first Apple Pay competitor, scaled to 6M+ users, and pioneered AI strategies for design automation and localization.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">3</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Xero <span class="text-sm text-gray-500">(2021-2022)</span></h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Led UK product strategy for a greenfield mobile-first product, establishing a high-velocity 'startup-within-a-scaleup' operational model.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">2</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Barclays <span class="text-sm text-gray-500">(2019-2021)</span></h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">As Product Owner for the Paperless Programme, drove adoption from 50% to 70%, saving £15M annually and adding 8M MAUs.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">1</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Believe Creative <span class="text-sm text-gray-500">(2007-2017)</span></h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Co-founded and scaled a creative engineering agency, leading a team of 40+ to deliver award-winning projects for clients like the BBC.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-16 bg-white rounded-xl shadow-lg">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">Skills & Expertise</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 px-6 items-center">
+                <div>
+                    <h4 class="text-xl font-bold text-center mb-2 text-gray-700">Domain & Methodologies</h4>
+                    <p class="text-center text-gray-600 mb-6">A balanced mastery of industry domains and modern product development frameworks.</p>
+                    <div class="chart-container">
+                        <canvas id="skillsRadarChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-center mb-2 text-gray-700">Expertise Breakdown</h4>
+                    <p class="text-center text-gray-600 mb-6">Distribution of core competencies across strategic, design, and technical leadership.</p>
+                    <div class="chart-container">
+                        <canvas id="expertiseDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="innovations" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Key Innovations at Curve</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                    <h4 class="text-xl font-bold text-center mb-4 text-gray-700">AI-Driven Automation Workflow</h4>
+                    <p class="text-gray-600 mb-6 text-center">A human-in-the-loop system I designed to scale creative and localization efforts efficiently.</p>
+                    <div class="space-y-2">
+                        <div class="p-3 bg-blue-50 border-l-4 border-blue-500">
+                            <p class="font-semibold text-blue-800">1. Input & Brief</p>
+                        </div>
+                        <div class="pl-4 text-xl font-bold text-gray-400">↓</div>
+                        <div class="p-3 bg-green-50 border-l-4 border-green-500">
+                            <p class="font-semibold text-green-800">2. AI Agent Processing</p>
+                        </div>
+                        <div class="pl-4 text-xl font-bold text-gray-400">↓</div>
+                        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-500">
+                            <p class="font-semibold text-yellow-800">3. Human Oversight & Review</p>
+                        </div>
+                        <div class="pl-4 text-xl font-bold text-gray-400">↓</div>
+                        <div class="p-3 bg-purple-50 border-l-4 border-purple-500">
+                            <p class="font-semibold text-purple-800">4. Iterative Refinement</p>
+                        </div>
+                        <div class="pl-4 text-xl font-bold text-gray-400">↓</div>
+                        <div class="p-3 bg-red-50 border-l-4 border-red-500">
+                            <p class="font-semibold text-red-800">5. Final Integration</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-lg">
+                    <h4 class="text-xl font-bold text-center mb-4 text-gray-700">Scaling Localization</h4>
+                    <p class="text-gray-600 mb-6 text-center">The AI process enabled exponential growth in language support, expanding market reach across the EEA.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="localizationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white text-center py-6">
+        <p>Interactive resume created for Dan Mackie.</p>
+    </footer>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const palette = {
+            primary: '#2c5282', // a deep blue
+            secondary: '#2d3748', // a dark gray
+            accent1: '#38a169', // a green
+            accent2: '#dd6b20', // an orange
+            accent3: '#d53f8c', // a pink
+        };
+
+        const skillsRadarCtx = document.getElementById('skillsRadarChart').getContext('2d');
+        new Chart(skillsRadarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Fintech', 'Web3', 'Enterprise', ['Product-Led', 'Growth'], 'Agile/Scrum', ['Design', 'Thinking']],
+                datasets: [{
+                    label: 'Expertise Level',
+                    data: [9, 8, 8, 9, 10, 9],
+                    backgroundColor: 'rgba(44, 82, 130, 0.2)',
+                    borderColor: palette.primary,
+                    pointBackgroundColor: palette.primary,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: palette.primary
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: { r: { suggestedMin: 0, suggestedMax: 10, pointLabels: { font: { size: 13 } } } },
+                plugins: { legend: { display: false }, tooltip: { callbacks: { title: tooltipTitleCallback } } }
+            }
+        });
+
+        const expertiseDoughnutCtx = document.getElementById('expertiseDoughnutChart').getContext('2d');
+        new Chart(expertiseDoughnutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Product Strategy', 'Design Leadership', 'Technical Collab', 'Data & Analytics', 'AI Automation'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [palette.primary, palette.accent1, palette.secondary, palette.accent2, palette.accent3],
+                    borderColor: '#f8f9fa',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: { legend: { position: 'bottom', labels: { padding: 15 } }, tooltip: { callbacks: { title: tooltipTitleCallback } } }
+            }
+        });
+
+        const localizationChartCtx = document.getElementById('localizationChart').getContext('2d');
+        new Chart(localizationChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Phase 1 (Manual)', 'Phase 2 (Hybrid)', ['Phase 3', '(AI-Scaled)']],
+                datasets: [{
+                    label: 'Languages Supported',
+                    data: [1, 7, 24],
+                    backgroundColor: [palette.accent2, palette.accent1, palette.primary],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: { x: { beginAtZero: true } },
+                plugins: { legend: { display: false }, tooltip: { callbacks: { title: tooltipTitleCallback } } }
+            }
+        });
+    </script>
+</body>
+</html>
